@@ -1,14 +1,24 @@
 <?php
-$host = "127.0.0.1"; // Dirección del servidor
-$usuario = "root"; // Usuario de MySQL
-$clave = ""; // Contraseña (déjala vacía si no configuraste una)
-$base_datos = "transito_db"; // Nombre de tu base de datos
-$puerto = 3307; // Puerto de MySQL
+// Datos de conexión proporcionados por Render
+$host = 'dpg-cu13k75svqrc73emlmmg-a'; // Por ejemplo: 'dpg-xxxxxx.render.com'
+$port = '5432'; // Puerto por defecto para PostgreSQL
+$dbname = 'transito_db'; // Por ejemplo: 'transito_db'
+$user = 'transito_db_user'; // Usuario proporcionado por Render
+$password = 'dU6PCItqq3X3u67SWb25eyfDfIMWEQO2'; // Contraseña proporcionada por Render
 
-$conn = new mysqli($host, $usuario, $clave, $base_datos, $puerto);
+// Cadena de conexión
+$conn_string = "host=$host port=$port dbname=$dbname user=$user password=$password";
 
-// Verifica la conexión
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+// Establecer la conexión
+$dbconn = pg_connect($conn_string);
+
+// Verificar la conexión
+if (!$dbconn) {
+    die("Error de conexión: " . pg_last_error());
+} else {
+    echo "Conexión exitosa";
 }
+
+// Cerrar la conexión cuando ya no se necesite
+// pg_close($dbconn);
 ?>
